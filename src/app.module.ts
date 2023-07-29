@@ -5,7 +5,13 @@ import { GptModule } from './gpt/gpt.module';
 import { ConfigModule } from '@nestjs/config';
 
 @Module({
-  imports: [GptModule, ConfigModule.forRoot()],
+  imports: [
+    GptModule,
+    ConfigModule.forRoot({
+      isGlobal: true,
+      envFilePath: '.env',
+    }),
+  ],
   controllers: [AppController],
   providers: [AppService],
 })
