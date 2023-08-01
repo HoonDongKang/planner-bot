@@ -6,14 +6,19 @@ export class GptController {
   constructor(private readonly gptService: GptService) {}
 
   @Post('/')
-  async getAnswer(@Body('prompt') prompt: string) {
-    const response = await this.gptService.getModelAnswer(prompt);
+  async firstChat(@Body('prompt') prompt: string) {
+    const response = await this.gptService.firstPrompt(prompt);
 
     return response;
   }
-  @Get('/hello')
-  async test() {
-    this.gptService.test();
-    return 0;
+
+  @Post('/chat')
+  async chatPrompt(@Body() Body: { prompt: string; context: any }) {
+    const response = await this.gptService.chatPrompt(
+      Body.prompt,
+      Body.context,
+    );
+
+    return response;
   }
 }
