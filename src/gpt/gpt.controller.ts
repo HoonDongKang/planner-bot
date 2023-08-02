@@ -9,9 +9,10 @@ export class GptController {
 
   @Post('/')
   @ApiOperation({
-    summary: 'prompt에 첫 요청을 보낼 때 사용',
+    summary:
+      '사용자 요청(prompt)와 채팅 로그(context)를 통해 GPT 응답을 불러옵니다.',
     description:
-      '첫 요청에 대한 응답(assistant)과 전체 메세지 로그(context)를 응답',
+      '첫 요청 시에는 prompt만 매개변수로 사용하고, 그 이후 채팅부터 context를 포함해주세요.',
   })
   async firstChat(@Body() Body: GptDto) {
     const response = await this.gptService.chatCompleGpt(
