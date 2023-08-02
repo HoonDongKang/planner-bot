@@ -1,12 +1,6 @@
-import { Injectable, Module } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { response } from 'express';
-import {
-  Configuration,
-  OpenAIApi,
-  CreateCompletionRequest,
-  ChatCompletionRequestMessage,
-} from 'openai';
+import { Configuration, OpenAIApi, ChatCompletionRequestMessage } from 'openai';
 @Injectable()
 export class GptService {
   private readonly openAiApi: OpenAIApi;
@@ -36,39 +30,44 @@ export class GptService {
     return context;
   }
 
-  async firstPrompt(prompt: string) {
-    const baseCmd = this.basePromptCmd();
-    const firstChat = [...baseCmd, { role: 'user', content: prompt }] as any;
-    const response = await this.openAiApi.createChatCompletion({
-      model: this.configService.get<string>('CHAT_GPT_MODEL'),
-      messages: firstChat,
-    });
+  replacingText(text: string) {
+    const replacedText = text.replace(/\n/g, '');
+    return replacedText;
+  }
 
-    const chatLog = [
-      ...firstChat,
-      { role: 'assistant', content: response.data.choices[0].message.content },
+  async getResFromGpt(prompt: string, context?: any) {
+    const reqToGpt = [
+      ...context,
+      { role: 'user', content: this.replacingText(prompt) },
     ];
+    const resFromGpt = await this.openAiApi.createChatCompletion({
+      model: this.configService.get<string>('CHAT_GPT_MODEL'),
+      messages: reqToGpt,
+      temperature: 1.57,
+      max_tokens: 300,
+    });
+    const chatLog = [...reqToGpt, resFromGpt.data.choices[0].message];
 
     return {
-      messages: response.data.choices[0].message,
-      context: chatLog,
+      messages: resFromGpt.data.choices[0].message,
+      chatLog,
     };
   }
 
-  async chatPrompt(prompt: string, context: any) {
-    const chatContext = [...context, { role: 'user', content: prompt }] as any;
-    const response = await this.openAiApi.createChatCompletion({
-      model: this.configService.get<string>('CHAT_GPT_MODEL'),
-      messages: chatContext,
-    });
-    console.log(response);
-    const chatLog = [
-      ...chatContext,
-      { role: 'assistant', content: response.data.choices[0].message.content },
-    ];
-    return {
-      messages: response.data.choices[0].message,
-      context: chatLog,
-    };
+  async chatCompleGpt(prompt: string, context?: any) {
+    if (!context) {
+      const baseCmd = this.basePromptCmd();
+      const { messages, chatLog } = await this.getResFromGpt(prompt, baseCmd);
+      return { messages, chatLog };
+    } else {
+      const { messages, chatLog } = await this.getResFromGpt(prompt, context);
+      return { messages, chatLog };
+    }
+  }
+
+  test() {
+    const test =
+      '{"Day1":["GyeongbokgungPalace","BukchonHanokVillage","Myeongdong"],"Day2":["NamsanTower","Insadong"]}';
+    return JSON.parse(test);
   }
 }
