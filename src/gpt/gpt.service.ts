@@ -43,7 +43,7 @@ export class GptService {
     const resFromGpt = await this.openAiApi.createChatCompletion({
       model: this.configService.get<string>('CHAT_GPT_MODEL'),
       messages: reqToGpt,
-      temperature: 1.57,
+      temperature: 1.5,
       max_tokens: 300,
     });
     const chatLog = [...reqToGpt, resFromGpt.data.choices[0].message];

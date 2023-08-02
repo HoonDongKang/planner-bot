@@ -1,12 +1,13 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsOptional, IsString } from 'class-validator';
+import { IsArray, IsOptional, IsString, isArray } from 'class-validator';
 
 export class GptDto {
   @ApiProperty({ name: 'prompt', example: 'string' })
   @IsString()
   prompt: string;
+
   @ApiProperty({ name: 'prompt', example: 'string' })
-  @IsString()
+  @IsArray()
   @IsOptional()
-  context?: string;
+  context?: Array<any>;
 }
