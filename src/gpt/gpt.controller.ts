@@ -1,12 +1,16 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post, Res, UseGuards } from '@nestjs/common';
 import { GptService } from './gpt.service';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { GptDto } from './dto/gpt.dto';
+import { JwtGuard } from './jwt.auth.guard';
+import { TokenDto } from './dto/token.dto';
+import { Response as expRes } from 'express';
 @ApiTags('gpt')
 @Controller('gpt')
 export class GptController {
   constructor(private readonly gptService: GptService) {}
 
+  @UseGuards(JwtGuard)
   @Post('/')
   @ApiOperation({
     summary:
@@ -23,8 +27,21 @@ export class GptController {
     return response;
   }
 
+  @Post('/token')
+  generateToken(@Body() toeknDto: TokenDto, @Res() res: expRes) {
+    const { token } = this.gptService.generateToken(toeknDto);
+    res.cookie('gpt_token', token, {
+      httpOnly: true,
+      maxAge: 7 * 24 * 60 * 60 * 1000, //7d,
+      sameSite: 'lax',
+      path: '/',
+    });
+    return res.send({ token });
+  }
+
   @Get('')
   test() {
-    return this.gptService.test();
+    const payload = { ip: 'hello' };
+    return this.gptService.generateToken(payload);
   }
 }

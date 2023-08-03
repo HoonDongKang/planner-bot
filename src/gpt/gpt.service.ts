@@ -1,10 +1,14 @@
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
+import { JwtService } from '@nestjs/jwt';
 import { Configuration, OpenAIApi, ChatCompletionRequestMessage } from 'openai';
 @Injectable()
 export class GptService {
   private readonly openAiApi: OpenAIApi;
-  constructor(private configService: ConfigService) {
+  constructor(
+    private configService: ConfigService,
+    private jwtService: JwtService,
+  ) {
     const configuration = new Configuration({
       organization: this.configService.get<string>('CHAT_GPT_ORGANIZATION_ID'),
       apiKey: this.configService.get<string>('CHAT_GPT_API_KEY'),
@@ -65,6 +69,14 @@ export class GptService {
       const { messages, chatLog } = await this.getResFromGpt(prompt, context);
       return { messages, chatLog };
     }
+  }
+
+  generateToken(payload: { ip: string }) {
+    const token = this.jwtService.sign(payload, {
+      secret: this.configService.get<string>('JWT_SECRET'),
+    });
+
+    return { token };
   }
 
   test() {
