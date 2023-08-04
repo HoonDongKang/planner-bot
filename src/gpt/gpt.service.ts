@@ -78,12 +78,4 @@ export class GptService {
 
     return { token };
   }
-
-  test() {
-    const test =
-      '{"Day1":["GyeongbokgungPalace","BukchonHanokVillage","Myeongdong"],"Day2":["NamsanTower","Insadong"]}';
-
-    const test2 = this.configService.get<string>('CHAT_GPT_SYSTEM');
-    return this.replacingText(test2);
-  }
 }
