@@ -13,14 +13,16 @@ export class TokenGuard implements CanActivate {
     context: ExecutionContext,
   ): boolean | Promise<boolean> | Observable<boolean> {
     const request = context.switchToHttp().getRequest();
-    console.log(request.cookies);
+    console.log(`cookie 목록 : ${request.cookies}`);
     const { gpt_token } = request.cookies;
-    if (!gpt_token) return true;
-    else {
-      throw new HttpException(
-        '5회 무료 이용이 끝났습니다.',
-        HttpStatus.FORBIDDEN,
-      );
-    }
+    console.log(`gpt_token : ${gpt_token}`);
+    return true;
+    // if (!gpt_token) return true;
+    // else {
+    //   throw new HttpException(
+    //     '5회 무료 이용이 끝났습니다.',
+    //     HttpStatus.FORBIDDEN,
+    //   );
+    // }
   }
 }
