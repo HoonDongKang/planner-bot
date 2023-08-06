@@ -31,6 +31,7 @@ export class GptController {
   generateToken(@Body() toeknDto: TokenDto, @Res() res: expRes) {
     const { token } = this.gptService.generateToken(toeknDto);
     res.cookie('gpt_token', token, {
+      domain: 'https://plannerbot.vercel.app',
       secure: true,
       maxAge: 7 * 24 * 60 * 60 * 1000, //7d,
       sameSite: 'lax',
