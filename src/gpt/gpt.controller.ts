@@ -33,9 +33,9 @@ export class GptController {
     res.cookie('gpt_token', token, {
       domain: '.plannerbot.vercel.app',
       secure: true,
-      httpOnly: true,
+      // httpOnly: true,
       maxAge: 7 * 24 * 60 * 60 * 1000, //7d,
-      sameSite: 'lax',
+      sameSite: 'none',
       path: '/',
     });
     return res.send({ token });
