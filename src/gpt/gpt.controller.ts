@@ -33,7 +33,7 @@ export class GptController {
     res.cookie('gpt_token', token, {
       domain: '.planbot.click',
       secure: true,
-      httpOnly: true,
+      // httpOnly: true,
       maxAge: 7 * 24 * 60 * 60 * 1000, //7d,
       sameSite: 'none',
       path: '/',
