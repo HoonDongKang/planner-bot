@@ -13,6 +13,7 @@ export class TokenGuard implements CanActivate {
     context: ExecutionContext,
   ): boolean | Promise<boolean> | Observable<boolean> {
     const request = context.switchToHttp().getRequest();
+    console.log(request.cookies);
     const { gpt_token } = request.cookies;
     if (!gpt_token) return true;
     else {
