@@ -1,4 +1,4 @@
-# 🤖 Planer Bot
+# 🤖 Planer Bot (Backend)
 
 ## 🖐️ Introduction
 
