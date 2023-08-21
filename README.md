@@ -30,7 +30,7 @@ When you submit the destination and duration of your trip, ChatGPT will provide 
 
 > 4.  This service can be used up to five times.
 
-![12](https://github.com/HoonDongKang/planner-bot/assets/102861831/6497ed74-91e9-4a1f-ab94-2415bcc10271)
+![12](https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOGdydGxpeGJsaDlmczBuZ2JtMnB4d3JudTdzejdqc3l3cmgwd25rcyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/x3cuuzAzMEYlbkAa7P/giphy.gif)
 
 ## ⚙️ Built with
 
