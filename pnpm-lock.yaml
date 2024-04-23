@@ -2998,7 +2998,7 @@ packages:
       combined-stream: 1.0.8
       mime-types: 2.1.35
 
-  /formidable@2.1.2:
+  /formidable@3.2.4:
     resolution: {integrity: sha512-CM3GuJ57US06mlpQ47YcunuUZ9jpm8Vx+P2CGt2j7HpgkKZO/DJYQ0Bobim8G6PFQmK5lOqOOdUXboU+h73A4g==}
     dependencies:
       dezalgo: 1.0.4
@@ -5013,7 +5013,7 @@ packages:
       debug: 4.3.4
       fast-safe-stringify: 2.1.1
       form-data: 4.0.0
-      formidable: 2.1.2
+      formidable: 3.2.4
       methods: 1.1.2
       mime: 2.6.0
       qs: 6.11.2
